@@ -17,6 +17,7 @@
 					/obj/item/clothing/under/rank/civilian/clown/purple = 1,
 					/obj/item/clothing/under/rank/civilian/clown/sexy = 1,
 					/obj/item/clothing/mask/gas/mime = 1,
+					/obj/item/clothing/head/testhat = 1,
 					/obj/item/clothing/mask/gas/sexymime = 1,
 					/obj/item/clothing/under/rank/civilian/mime = 1,
 					/obj/item/clothing/under/rank/civilian/mime/sexy = 1,
