@@ -41,14 +41,14 @@
 	AddComponent(/datum/component/udder)
 	. = ..()
 
-/mob/living/simple_animal/hostile/retaliate/goat/Life()
+/mob/living/simple_animal/hostile/retaliate/goat/Life(delta_time = SSMOBS_DT, times_fired)
 	. = ..()
 	if(.)
 		//chance to go crazy and start wacking stuff
-		if(!enemies.len && prob(1))
+		if(!enemies.len && DT_PROB(0.5, delta_time))
 			Retaliate()
 
-		if(enemies.len && prob(10))
+		if(enemies.len && DT_PROB(5, delta_time))
 			clear_enemies()
 			LoseTarget()
 			src.visible_message(span_notice("[src] calms down."))
@@ -98,10 +98,11 @@
 			H.visible_message(span_warning("[src] takes a big chomp out of [H]!"), \
 									span_userdanger("[src] takes a big chomp out of your [NB]!"))
 			NB.dismember()
+
 /mob/living/simple_animal/hostile/retaliate/goat/rabid
 	name = "Rabid Maintenance Pete"
 	faction = list(FACTION_HOSTILE)
-
+			
 //cow
 /mob/living/simple_animal/cow
 	name = "cow"
@@ -231,12 +232,12 @@
 	pixel_y = base_pixel_y + rand(0, 10)
 	GLOB.total_chickens++
 
-/mob/living/simple_animal/chick/Life()
+/mob/living/simple_animal/chick/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
 	if(!stat && !ckey)
-		amount_grown += rand(1,2)
+		amount_grown += rand(0.5 * delta_time, 1 * delta_time)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/chicken(src.loc)
 			qdel(src)
@@ -336,11 +337,11 @@
 	else
 		..()
 
-/mob/living/simple_animal/chicken/Life()
+/mob/living/simple_animal/chicken/Life(delta_time = SSMOBS_DT, times_fired)
 	. =..()
 	if(!.)
 		return
-	if((!stat && prob(3) && eggsleft > 0) && egg_type && GLOB.total_chickens < CONFIG_GET(number/max_chickens))
+	if((!stat && DT_PROB(1.5, delta_time) && eggsleft > 0) && egg_type && GLOB.total_chickens < CONFIG_GET(number/max_chickens))
 		visible_message("[src] [pick(layMessage)]")
 		eggsleft--
 		var/obj/item/E = new egg_type(get_turf(src))
